@@ -1,11 +1,13 @@
 # This allows us to use code from the open-source
 # pygame library throughout this file
 import pygame
+import sys
 from constants import *
 from logger import log_state
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from logger import log_event
 
 
 def main():
@@ -36,6 +38,13 @@ def main():
                 return
         screen.fill("black")
         updatable.update(dt)
+
+        for ast in asteroids:
+            if ast.collides_with(player_one):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
+
         for object in drawable:
             object.draw(screen)
 
